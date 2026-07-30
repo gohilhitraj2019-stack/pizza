@@ -1,30 +1,38 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from werkzeug.utils import secure_filename
+from flask_wtf.csrf import CSRFProtect
 import sqlite3
+DATABASE = "pizza.db"
 
+SELECT_ALL_PIZZAS = "SELECT * FROM pizza"
+SELECT_ALL_REVIEWS = "SELECT * FROM review"
+SELECT_ABOUT = "SELECT * FROM about_stats LIMIT 1"
+IMAGE_PATH = "static/images/"
 app = Flask(__name__)
+
+app.secret_key = "pizza_project_secret_key"
+csrf = CSRFProtect(app)
 
 
 # ---------------- HOME PAGE ----------------
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def home():
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+        cursor = conn.cursor()
 
-    # Pizza
-    cursor.execute("SELECT * FROM pizza")
-    pizzas = cursor.fetchall()
+        # Pizza
+        cursor.execute(SELECT_ALL_PIZZAS)
+        pizzas = cursor.fetchall()
 
-    # Reviews
-    cursor.execute("SELECT * FROM review")
-    reviews = cursor.fetchall()
+        # Reviews
+        cursor.execute(SELECT_ALL_REVIEWS)
+        reviews = cursor.fetchall()
 
-    # About Stats
-    cursor.execute("SELECT * FROM about_stats LIMIT 1")
-    about = cursor.fetchone()
-
-    conn.close()
+        # About Stats
+        cursor.execute(SELECT_ABOUT)
+        about = cursor.fetchone()
 
     return render_template(
         "index.html",
@@ -43,8 +51,8 @@ def admin():
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = sqlite3.connect("pizza.db")
-        cursor = conn.cursor()
+        with sqlite3.connect(DATABASE) as conn:
+         cursor = conn.cursor()
 
         cursor.execute(
             "SELECT * FROM admin WHERE username=? AND password=?",
@@ -64,15 +72,15 @@ def admin():
 
 
 # ---------------- DASHBOARD ----------------
-@app.route("/dashboard")
+@app.route("/dashboard", methods=["GET"])
 def dashboard():
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
 
 
-    cursor.execute("SELECT * FROM review")
+    cursor.execute(SELECT_ALL_REVIEWS)
     reviews = cursor.fetchall()
 
     cursor.execute("SELECT COUNT(*) FROM pizza")
@@ -84,7 +92,7 @@ def dashboard():
     cursor.execute("SELECT SUM(price) FROM pizza")
     total_value = cursor.fetchone()[0] or 0
 
-    cursor.execute("SELECT * FROM about_stats LIMIT 1")   
+    cursor.execute(SELECT_ABOUT) 
     about = cursor.fetchone()                             
     conn.close()
 
@@ -108,12 +116,12 @@ def addpizza():
         price = request.form["price"]
 
         image = request.files["image"]
-        filename = image.filename
+        filename = secure_filename(image.filename)
 
-        image.save("static/images/" + filename)
+        image.save(IMAGE_PATH + filename)
 
-        conn = sqlite3.connect("pizza.db")
-        cursor = conn.cursor()
+        with sqlite3.connect(DATABASE) as conn:
+         cursor = conn.cursor()
 
         cursor.execute("""
             INSERT INTO pizza(name, description, price, image)
@@ -130,8 +138,8 @@ def addpizza():
 @app.route("/editpizza/<int:id>", methods=["GET", "POST"])
 def editpizza(id):
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+      cursor = conn.cursor()
 
     if request.method == "POST":
 
@@ -140,10 +148,10 @@ def editpizza(id):
         price = request.form["price"]
 
         image = request.files["image"]
-        filename = image.filename
+        filename = secure_filename(image.filename)
 
         if filename != "":
-            image.save("static/images/" + filename)
+            image.save(IMAGE_PATH + filename)
         else:
             cursor.execute("SELECT image FROM pizza WHERE id=?", (id,))
             filename = cursor.fetchone()[0]
@@ -167,11 +175,11 @@ def editpizza(id):
     return render_template("edit_pizza.html", pizza=pizza)
 # ---------------- DELETE  PIZZA ----------------
 
-@app.route("/deletepizza/<int:id>")
+@app.route("/deletepizza/<int:id>", methods=["GET"])
 def deletepizza(id):
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM pizza WHERE id=?", (id,))
 
@@ -183,13 +191,12 @@ def deletepizza(id):
 
 # ---------------- REVIEW DASHBOARD ----------------
 
-@app.route("/reviews")
+@app.route("/reviews", methods=["GET"])
 def reviews():
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM review")
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
+    cursor.execute(SELECT_ALL_REVIEWS)
     reviews = cursor.fetchall()
 
     conn.close()
@@ -208,12 +215,12 @@ def addreview():
 
         # Image Upload
         image = request.files["image"]
-        filename = image.filename
+        filename = secure_filename(image.filename)
 
-        image.save("static/images/" + filename)
+        image.save(IMAGE_PATH + filename)
 
-        conn = sqlite3.connect("pizza.db")
-        cursor = conn.cursor()
+        with sqlite3.connect(DATABASE) as conn:
+         cursor = conn.cursor()
 
         cursor.execute("""
             INSERT INTO review(customer_name, image, rating, review)
@@ -231,8 +238,8 @@ def addreview():
 @app.route("/editreview/<int:id>", methods=["GET", "POST"])
 def editreview(id):
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     if request.method == "POST":
 
@@ -241,10 +248,10 @@ def editreview(id):
         review = request.form["review"]
 
         image = request.files["image"]
-        filename = image.filename
+        filename = secure_filename(image.filename)
 
         if filename != "":
-            image.save("static/images/" + filename)
+            image.save(IMAGE_PATH + filename)
         else:
             cursor.execute("SELECT image FROM review WHERE id=?", (id,))
             filename = cursor.fetchone()[0]
@@ -268,11 +275,11 @@ def editreview(id):
     return render_template("edit_review.html", review=review)
 # ---------------- DELETE REVIEW ----------------
 
-@app.route("/deletereview/<int:id>")
+@app.route("/deletereview/<int:id>", methods=["GET"])
 def deletereview(id):
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM review WHERE id=?", (id,))
 
@@ -281,13 +288,13 @@ def deletereview(id):
 
     return redirect(url_for("dashboard"))
 
-@app.route("/search")
+@app.route("/search", methods=["GET"])
 def search():
 
     keyword = request.args.get("q", "")
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     cursor.execute(
         "SELECT * FROM pizza WHERE name LIKE ?",
@@ -314,15 +321,15 @@ def search():
         average_price=round(average_price, 2),
         total_value=total_value
     )
-@app.route("/logout")
+@app.route("/logout", methods=["GET"])
 def logout():
     return redirect(url_for("admin"))
 
 # ---------------- DB SETUP (About Stats) ----------------
 
 def init_about_stats():
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS about_stats (
@@ -356,10 +363,10 @@ init_about_stats()  # runs once when the app starts
 # ---------------- EDIT ABOUT STATS ----------------
 
 @app.route("/editabout", methods=["GET", "POST"])
+@csrf.exempt
 def editabout():
-
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     if request.method == "POST":
 
@@ -380,7 +387,7 @@ def editabout():
 
         return redirect(url_for("dashboard"))
 
-    cursor.execute("SELECT * FROM about_stats LIMIT 1")
+    cursor.execute(SELECT_ABOUT)
     about = cursor.fetchone()
 
     conn.close()
@@ -392,10 +399,10 @@ def editabout():
 
 @app.route("/api/pizzas", methods=["GET"])
 def get_pizzas():
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM pizza")
+    cursor.execute(SELECT_ALL_PIZZAS)
     rows = cursor.fetchall()
 
     pizzas = []
@@ -417,8 +424,8 @@ def get_pizzas():
 @app.route("/api/pizzas/<int:pizza_id>", methods=["GET"])
 def get_pizza(pizza_id):
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM pizza WHERE id = ?", (pizza_id,))
     pizza = cursor.fetchone()
@@ -426,12 +433,13 @@ def get_pizza(pizza_id):
     conn.close()
 
     if pizza:
-        return jsonify({
-            "id": pizza[1],
-            "description": pizza[0],
-            "name": pizza[3],
-            "price": pizza[2],
-        })
+       return jsonify({
+    "id": pizza[0],
+    "name": pizza[1],
+    "description": pizza[2],
+    "price": pizza[3],
+    "image": pizza[4]
+})
 
     return jsonify({
         "message": "Pizza not found"
@@ -443,10 +451,10 @@ def get_pizza(pizza_id):
 @app.route("/api/review", methods=["GET"])
 def get_reviews():
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM review")
+    cursor.execute(SELECT_ALL_REVIEWS)
     reviews = cursor.fetchall()
 
     conn.close()
@@ -464,14 +472,13 @@ def get_reviews():
     return jsonify(review_list)
 
 
-
 # ----------------API REVIEW ID ----------------
 
 @app.route("/api/review/<int:review_id>", methods=["GET"])
 def get_review(review_id):
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM review WHERE id = ?", (review_id,))
     review = cursor.fetchone()
@@ -480,11 +487,12 @@ def get_review(review_id):
 
     if review:
         return jsonify({
-            "id": review[0],
-            "name": review[1],
-            "rating": review[2],
-            "review": review[3],
-        })
+    "id": review[0],
+    "customer_name": review[1],
+    "image": review[2],
+    "rating": review[3],
+    "review": review[4]
+})
 
     return jsonify({
         "message": "review not found"
@@ -497,8 +505,8 @@ def get_review(review_id):
 @app.route("/api/admin", methods=["GET"])
 def get_admin():
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM admin")
     admin = cursor.fetchone()
@@ -519,25 +527,23 @@ def get_admin():
 @app.route("/api/aboutus", methods=["GET"])
 def about_stats():
 
-    conn = sqlite3.connect("pizza.db")
-    cursor = conn.cursor()
+    with sqlite3.connect(DATABASE) as conn:
+        cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM about_stats")
-    about = cursor.fetchone()
-
-    conn.close()
+        cursor.execute("SELECT * FROM about_stats")
+        about = cursor.fetchone()
 
     if about:
-     return jsonify({
-    "description": about[1],
-    "happy_customers": about[3],
-    "years_experience": about[2],
-    "pizza_recipes": about[4],
-    "fast_delivery": about[5]
-})
-    return jsonify({"message": "about section not found"}), 404
+        return jsonify({
+            "description": about[1],
+            "years_experience": about[2],
+            "happy_customers": about[3],
+            "pizza_recipes": about[4],
+            "fast_delivery": about[5]
+        })
 
+    return jsonify({"message": "about section not found"}), 404
 # ---------------- RUN APP ----------------
 
 if __name__ == "__main__":
-    app.run(debug=True)
+ app.run(port=5001)

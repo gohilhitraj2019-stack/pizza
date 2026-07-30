@@ -8,9 +8,9 @@
       <!-- Bootstrap Icons -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
       <!-- AdminLTE CSS -->
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/adminlte.css') }}">
+      <link rel="stylesheet" href="{{url_for('static', filename='css/adminlte.css')}}">
       <!-- Your CSS -->
-      <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+      <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 
       <!--begin::Theme Init-->
       <script>
@@ -26,7 +26,7 @@
           } else if (prefersDark) {
             resolved = 'dark';
           }
-          document.documentElement.setAttribute('data-bs-theme', resolved);
+          document.documentElement.dataset.bsTheme = resolved;
           document.documentElement.style.colorScheme = resolved;
         })();
       </script>
@@ -41,10 +41,10 @@
       <meta name="author" content="ColorlibHQ" />
       <meta name="description" content="AdminLTE is a free Bootstrap 5 admin dashboard template" />
 
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" media="print" onload="this.media = 'all'" />
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous" />
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" crossorigin="anonymous" />
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" crossorigin="anonymous" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" media="print" onload="this.media ='all'"/>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous"/>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" crossorigin="anonymous"/>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" crossorigin="anonymous"/>
     </head>
     <!--end::Head-->
 
@@ -56,9 +56,14 @@
           <div class="container-fluid">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button" aria-label="Toggle sidebar">
-                  <i class="bi bi-list"></i>
-                </a>
+<a class="nav-link"
+   data-lte-toggle="sidebar"
+   href="#"
+   role="button"
+   aria-label="Toggle sidebar">
+    <i class="bi bi-list"></i>
+</a>
+                
               </li>
             </ul>
 
@@ -109,18 +114,21 @@
 <a href="#"
    class="nav-link active"
    id="nav-dashboard"
-   onclick="showSection('dashboard'); return false;">                  <i class="nav-icon bi bi-speedometer"></i>
+   onclick="showSection('dashboard'); return false;"
+   onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showSection('dashboard');}">          
+         <i class="nav-icon bi bi-speedometer"></i>
                     <p>Dashboard 📊</p>
                   </a>
                 </li>
 
                 <!-- Pizza List -->
                 <li class="nav-item">
-              <a href="#"
+             <a href="#"
    class="nav-link"
    id="nav-pizzalist"
-   onclick="showSection('pizzalist'); return false;">
-                    <i class="nav-icon bi bi-circle"></i>
+   onclick="showSection('pizzalist'); return false;"
+   onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showSection('pizzalist');}">
+                     <i class="nav-icon bi bi-circle"></i>
                     <p>Pizza List 🍕</p>
                   </a>
                 </li>
@@ -130,15 +138,21 @@
 <a href="#"
    class="nav-link"
    id="nav-reviews"
-   onclick="showSection('reviews'); return false;">                 <i class="nav-icon bi bi-star"></i>
+   onclick="showSection('reviews'); return false;"
+   onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showSection('reviews');}">
+                   <i class="nav-icon bi bi-star"></i>
                     <p>View Reviews 👨🏻💻</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link" id="nav-aboutsection" onclick="showSection('aboutsection'); return false;">
-                    <i class="nav-icon bi bi-info-circle"></i>
-                    <p>About Section ℹ️</p>
-                  </a>
+                <button
+    type="button"
+    class="nav-link border-0 bg-transparent w-100 text-start"
+    id="nav-aboutsection"
+    onclick="showSection('aboutsection')">
+    <i class="nav-icon bi bi-info-circle"></i>
+    <p>About Section ℹ️</p>
+</button>
                 </li>
               
               </ul>
@@ -325,11 +339,13 @@
                     <div class="card card-info">
                     <div class="card-header d-flex justify-content-between align-items-center">
                       <h3 class="card-title mb-0">About Our Pizza ℹ️</h3>
-                      <a href="#" class="btn btn-warning btn-sm rounded-pill px-3 py-1 ms-auto"
-                        style="min-width: 60px; font-weight: 500;"
-                        onclick="showSection('editabout'); return false;">
-                        Edit
-                      </a>
+                    <button
+    type="button"
+    class="btn btn-warning btn-sm rounded-pill px-3 py-1 ms-auto"
+    style="min-width: 60px; font-weight: 500;"
+    onclick="showSection('editabout')">
+    Edit
+</button>
                     </div>
                       <div class="card-body">
 
@@ -341,22 +357,22 @@
 <div class="row text-center">
 
   <div class="col-md-3 mb-3">
-    <h4 class="text-danger fw-bold" id="yearsExperience"></h4>
+<h4 class="text-danger fw-bold" id="yearsExperience">0</h4>
     <p class="mb-0">Years Experience</p>
   </div>
 
   <div class="col-md-3 mb-3">
-    <h4 class="text-danger fw-bold" id="happyCustomers"></h4>
+<h4 class="text-danger fw-bold" id="happyCustomers">0</h4>
     <p class="mb-0">Happy Customers</p>
   </div>
 
   <div class="col-md-3 mb-3">
-    <h4 class="text-danger fw-bold" id="pizzaRecipes"></h4>
+    <h4 class="text-danger fw-bold" id="pizzaRecipes">0</h4>
     <p class="mb-0">Pizza Recipes</p>
   </div>
 
   <div class="col-md-3 mb-3">
-    <h4 class="text-danger fw-bold" id="fastDelivery"></h4>
+   <h4 class="text-danger fw-bold" id="fastDelivery">0</h4>
     <p class="mb-0">Fast Delivery</p>
   </div>
 
@@ -379,24 +395,68 @@
                       <form action="{{ url_for('editabout') }}" method="POST">
                         <div class="card-body">
                           <div class="mb-3">
-                            <label class="form-label fw-bold">Description</label>
-                            <textarea class="form-control" name="description" rows="3" required>{{ about[1] }}</textarea>
+                           <label for="description" class="form-label fw-bold">
+    Description
+</label>
+
+<textarea
+    id="description"
+    class="form-control"
+    name="description"
+    rows="3"
+    required>{{ about[1] }}</textarea>
                           </div>
                           <div class="mb-3">
-                            <label class="form-label fw-bold">Years Experience</label>
-                            <input type="text" class="form-control" name="years_experience" value="{{ about[2] }}" required>
+                           <label for="years_experience" class="form-label fw-bold">
+    Years Experience
+</label>
+
+<input
+    type="text"
+    id="years_experience"
+    class="form-control"
+    name="years_experience"
+    value="{{ about[2] }}"
+    required>
                           </div>
                           <div class="mb-3">
-                            <label class="form-label fw-bold">Happy Customers</label>
-                            <input type="text" class="form-control" name="happy_customers" value="{{ about[3] }}" required>
+                            <label for="happy_customers" class="form-label fw-bold">
+    Happy Customers
+</label>
+
+<input
+    type="text"
+    id="happy_customers"
+    class="form-control"
+    name="happy_customers"
+    value="{{ about[3] }}"
+    required>
                           </div>
                           <div class="mb-3">
-                            <label class="form-label fw-bold">Pizza Recipes</label>
-                            <input type="text" class="form-control" name="pizza_recipes" value="{{ about[4] }}" required>
+                           <label for="pizza_recipes" class="form-label fw-bold">
+    Pizza Recipes
+</label>
+
+<input
+    type="text"
+    id="pizza_recipes"
+    class="form-control"
+    name="pizza_recipes"
+    value="{{ about[4] }}"
+    required> 
                           </div>
                           <div class="mb-3">
-                            <label class="form-label fw-bold">Fast Delivery</label>
-                            <input type="text" class="form-control" name="fast_delivery" value="{{ about[5] }}" required>
+                           <label for="fast_delivery" class="form-label fw-bold">
+    Fast Delivery
+</label>
+
+<input
+    type="text"
+    id="fast_delivery"
+    class="form-control"
+    name="fast_delivery"
+    value="{{ about[5] }}"
+    required>
                           </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between">
@@ -471,71 +531,92 @@
 
       <!-- Section Switching Logic -->
       <script>
-        function showSection(sectionName) {
-          const dashSection = document.getElementById('dashboard-section');
-          const pizzaSection = document.getElementById('pizzalist-section');
-          const addPizzaSection = document.getElementById('addpizza-section');
-          const reviewsSection = document.getElementById('reviews-section');
-          const addReviewSection = document.getElementById('addreview-section');
-              const aboutSection = document.getElementById('aboutsection-section');      
-          const editAboutSection = document.getElementById('editabout-section'); 
+        
+       function hideAllSections() {
+  [
+    'dashboard-section',
+    'pizzalist-section',
+    'addpizza-section',
+    'reviews-section',
+    'addreview-section',
+    'aboutsection-section',
+    'editabout-section'
+  ].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+}
 
-          const navDash = document.getElementById('nav-dashboard');
-          const navPizza = document.getElementById('nav-pizzalist');
-          const navReviews = document.getElementById('nav-reviews');
-                  const navAbout = document.getElementById('nav-aboutsection'); 
+function clearActiveNav() {
+  [
+    'nav-dashboard',
+    'nav-pizzalist',
+    'nav-reviews',
+    'nav-aboutsection'
+  ].forEach(function(id) {
+    const nav = document.getElementById(id);
+    if (nav) nav.classList.remove('active');
+  });
+}
 
-          const pageTitle = document.getElementById('page-title');
-          const breadcrumbCurrent = document.getElementById('breadcrumb-current');
+function updatePage(title, breadcrumb) {
+  const pageTitle = document.getElementById('page-title');
+  const breadcrumbCurrent = document.getElementById('breadcrumb-current');
 
-          dashSection.style.display = 'none';
-          pizzaSection.style.display = 'none';
-          addPizzaSection.style.display = 'none';
-          reviewsSection.style.display = 'none';
-          addReviewSection.style.display = 'none';
-                  aboutSection.style.display = 'none';     
-          editAboutSection.style.display = 'none'; 
+  if (pageTitle) pageTitle.innerText = title;
+  if (breadcrumbCurrent) breadcrumbCurrent.innerText = breadcrumb;
+}
+function activateSection(sectionId, navId, title, breadcrumb) {
+  document.getElementById(sectionId).style.display = 'block';
 
-          navDash.classList.remove('active');
-          navPizza.classList.remove('active');
-          navReviews.classList.remove('active');
-              navAbout.classList.remove('active');  
+  if (navId) {
+    document.getElementById(navId).classList.add('active');
+  }
 
-            if (sectionName === 'dashboard') {
-            dashSection.style.display = 'block';
-            navDash.classList.add('active');
-            if (pageTitle) pageTitle.innerText = 'Dashboard';
-            if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'Dashboard';
-          } else if (sectionName === 'pizzalist') {
-            pizzaSection.style.display = 'block';
-            navPizza.classList.add('active');
-            if (pageTitle) pageTitle.innerText = 'Pizza List';
-            if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'Pizza List';
-          } else if (sectionName === 'addpizza') {
-            addPizzaSection.style.display = 'block';
-            if (pageTitle) pageTitle.innerText = 'Add New Pizza';
-            if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'Add Pizza';
-          } else if (sectionName === 'reviews') {
-            reviewsSection.style.display = 'block';
-            navReviews.classList.add('active');
-            if (pageTitle) pageTitle.innerText = 'Customer Reviews';
-            if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'Reviews';
-          } else if (sectionName === 'addreview') {
-            addReviewSection.style.display = 'block';
-            if (pageTitle) pageTitle.innerText = 'Add New Review';
-            if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'Add Review';
-          } else if (sectionName === 'aboutsection') {                               
-            aboutSection.style.display = 'block';
-            navAbout.classList.add('active');
-            if (pageTitle) pageTitle.innerText = 'About Section';
-            if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'About Section';
-          } else if (sectionName === 'editabout') {                                    
-            editAboutSection.style.display = 'block';
-            if (pageTitle) pageTitle.innerText = 'Edit About Section';
-            if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'Edit About';
-          }
-        }
+  updatePage(title, breadcrumb);
+}
+function showSection(sectionName) {
 
+  hideAllSections();
+  clearActiveNav();
+
+  switch (sectionName) {
+
+case 'dashboard':
+  activateSection('dashboard-section', 'nav-dashboard', 'Dashboard', 'Dashboard');
+  break;
+
+case 'pizzalist':
+  activateSection('pizzalist-section', 'nav-pizzalist', 'Pizza List', 'Pizza List');
+  break;
+
+    case 'addpizza':
+      document.getElementById('addpizza-section').style.display = 'block';
+      updatePage('Add New Pizza', 'Add Pizza');
+      break;
+
+   case 'reviews':
+  activateSection('reviews-section', 'nav-reviews', 'Customer Reviews', 'Reviews');
+  break;
+
+    case 'addreview':
+      document.getElementById('addreview-section').style.display = 'block';
+      updatePage('Add New Review', 'Add Review');
+      break;
+
+  case 'aboutsection':
+  activateSection('aboutsection-section', 'nav-aboutsection', 'About Section', 'About Section');
+  break;
+
+    case 'editabout':
+      document.getElementById('editabout-section').style.display = 'block';
+      updatePage('Edit About Section', 'Edit About');
+      break;
+
+    default:
+  activateSection('dashboard-section', 'nav-dashboard', 'Dashboard', 'Dashboard');
+  }
+}
         window.addEventListener('DOMContentLoaded', () => {
           const hash = window.location.hash;
           if (hash === '#pizza-list') {
@@ -578,21 +659,23 @@ fetch("/api/pizzas")
 <img src="/static/images/${pizza.image}"
 style="width:90px;height:70px;object-fit:cover;border-radius:8px;">
 </td>
-
 <td class="text-center">
+<div class="d-flex justify-content-center gap-2">
 
-<a href="/editpizza/${pizza.id}" class="btn btn-warning btn-sm">
-Edit
-</a>
+<button type="button"
+        class="btn btn-warning btn-sm"
+        onclick="location.href='/editpizza/${pizza.id}'">
+    Edit
+</button>
 
-<a href="/deletepizza/${pizza.id}"
-class="btn btn-danger btn-sm"
-onclick="return confirm('Delete this pizza?')">
-Delete
-</a>
+<button type="button"
+        class="btn btn-danger btn-sm"
+        onclick="if(confirm('Delete this pizza?')) location.href='/deletepizza/${pizza.id}'">
+    Delete
+</button>
 
+</div>
 </td>
-
 </tr>
 `;
 
@@ -631,21 +714,24 @@ style="width:70px;height:70px;object-fit:cover;border-radius:50%;">
 <td>${review.review}</td>
 
 <td class="text-center">
+<div class="d-flex justify-content-center gap-2">
 
-<a href="/editreview/${review.id}"
-class="btn btn-warning btn-sm">
-Edit
-</a>
+<button type="button"
+        class="btn btn-warning btn-sm"
+        onclick="location.href='/editreview/${review.id}'">
+    Edit
+</button>
 
-<a href="/deletereview/${review.id}"
-class="btn btn-danger btn-sm"
-onclick="return confirm('Delete this review?')">
-Delete
-</a>
+<button type="button"
+        class="btn btn-danger btn-sm"
+        onclick="if(confirm('Delete this review?')) location.href='/deletereview/${review.id}'">
+    Delete
+</button>
 
+</div>
 </td>
 
-</tr>
+
 
 `;
 
@@ -654,23 +740,16 @@ Delete
 });
 
 </script>
-<script>
+<script type="module">
 
-fetch("/api/aboutus")
-.then(response => response.json())
-.then(data => {
+const response = await fetch("/api/aboutus");
+const data = await response.json();
 
-    document.getElementById("aboutDescription").innerText = data.description;
-
-    document.getElementById("yearsExperience").innerText = data.years_experience;
-
-    document.getElementById("happyCustomers").innerText = data.happy_customers;
-
-    document.getElementById("pizzaRecipes").innerText = data.pizza_recipes;
-
-    document.getElementById("fastDelivery").innerText = data.fast_delivery;
-
-});
+document.getElementById("aboutDescription").innerText = data.description;
+document.getElementById("yearsExperience").innerText = data.years_experience;
+document.getElementById("happyCustomers").innerText = data.happy_customers;
+document.getElementById("pizzaRecipes").innerText = data.pizza_recipes;
+document.getElementById("fastDelivery").innerText = data.fast_delivery;
 
 </script>
 

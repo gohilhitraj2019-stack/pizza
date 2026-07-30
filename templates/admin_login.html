@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Admin Login</title>
 
@@ -23,21 +23,23 @@
 
                     <form method="POST">
 
-                        <label>Username</label>
+                        <label for="username">Username</label>
 
                         <input type="text"
+                               id="username"
                                name="username"
                                class="form-control mb-3"
                                required>
 
-                        <label>Password</label>
+                        <label for="password">Password</label>
 
                         <input type="password"
+                               id="password"
                                name="password"
                                class="form-control mb-3"
                                required>
 
-                        <button class="btn btn-danger w-100">
+                        <button type="submit" class="btn btn-danger w-100">
                             Login
                         </button>
 

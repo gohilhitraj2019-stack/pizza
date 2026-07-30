@@ -26,7 +26,7 @@
         } else if (prefersDark) {
           resolved = 'dark';
         }
-        document.documentElement.setAttribute('data-bs-theme', resolved);
+       document.documentElement.dataset.bsTheme = resolved; 
         document.documentElement.style.colorScheme = resolved;
       })();
     </script>
@@ -46,19 +46,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" crossorigin="anonymous" />
   </head>
-  <!--end::Head-->
+  <!--end::Head--> 
 
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary layout-footer-fixed">
     <div class="app-wrapper">
 
       <!--begin::Header-->
-      <nav class="app-header navbar navbar-expand bg-body">
+      <nav class="app-header navbar navbar-expand bg-body" aria-label="Main Navigation">
         <div class="container-fluid">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button" aria-label="Toggle sidebar">
+              <button type="button" class="nav-link btn btn-link border-0 p-0 text-body" data-lte-toggle="sidebar" aria-label="Toggle sidebar">
                 <i class="bi bi-list"></i>
-              </a>
+              </button>
             </li>
           </ul>
 
@@ -106,7 +106,7 @@
               
               <!-- Dashboard -->
               <li class="nav-item">
-                <a href="#" class="nav-link active" id="nav-dashboard" onclick="showSection('dashboard'); return false;">
+                <button type="button" class="nav-link active text-start w-100 border-0 bg-transparent" id="nav-dashboard" onclick="showSection('dashboard');">
                   <i class="nav-icon bi bi-speedometer"></i>
                   <p>Dashboard 📊</p>
                 </a>
@@ -114,25 +114,25 @@
 
               <!-- Pizza List -->
               <li class="nav-item">
-                <a href="#" class="nav-link" id="nav-pizzalist" onclick="showSection('pizzalist'); return false;">
+                <button type="button" class="nav-link text-start w-100 border-0 bg-transparent" id="nav-pizzalist" onclick="showSection('pizzalist');">
                   <i class="nav-icon bi bi-circle"></i>
                   <p>Pizza List 🍕</p>
-                </a>
+                </button>
               </li>
 
               <!-- Add Pizza -->
               <li class="nav-item">
-                <a href="#" class="nav-link" id="nav-addpizza" onclick="showSection('addpizza'); return false;">
+                <button type="button" class="nav-link text-start w-100 border-0 bg-transparent" id="nav-addpizza" onclick="showSection('addpizza');">
                   <i class="nav-icon bi bi-circle"></i>
                   <p>Add pizza ➕</p>
-                </a>
+                </button>
               </li>
 
               <!-- View Reviews -->
               <li class="nav-item">
                 <a href="reviews" class="nav-link">
                   <i class="nav-icon bi bi-circle"></i>
-                  <p>View Reviews 👨🏻💻< /p>
+                  <p>View Reviews 👨🏻💻</p>
                 </a>
               </li>
 

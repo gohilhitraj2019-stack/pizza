@@ -10,31 +10,35 @@
 <div class="container py-5">
     <h2 class="mb-4">Edit About Our Pizza</h2>
 
-    <form method="POST">
+   <form method="POST">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="mb-3">
 
         <div class="mb-3">
-            <label class="form-label">Description</label>
-            <textarea class="form-control" name="description" rows="3" required>{{ about[1] }}</textarea>
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" class="form-control" name="description" rows="3" required>{{ about[1] }}</textarea>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Years Experience</label>
-            <input type="text" class="form-control" name="years_experience" value="{{ about[2] }}" required>
+            <label for="years_experience" class="form-label">Years Experience</label>
+            <input id="years_experience" type="text" class="form-control" name="years_experience" value="{{ about[2] }}" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Happy Customers</label>
-            <input type="text" class="form-control" name="happy_customers" value="{{ about[3] }}" required>
+            <label for="happy_customers" class="form-label">Happy Customers</label>
+            <input id="happy_customers" type="text" class="form-control" name="happy_customers" value="{{ about[3] }}" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Pizza Recipes</label>
-            <input type="text" class="form-control" name="pizza_recipes" value="{{ about[4] }}" required>
+            <label for="pizza_recipes" class="form-label">Pizza Recipes</label>
+            <input id="pizza_recipes" type="text" class="form-control" name="pizza_recipes" value="{{ about[4] }}" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Fast Delivery</label>
-            <input type="text" class="form-control" name="fast_delivery" value="{{ about[5] }}" required>
+            <label for="fast_delivery" class="form-label">Fast Delivery</label>
+            <input id="fast_delivery" type="text" class="form-control" name="fast_delivery" value="{{ about[5] }}" required>
         </div>
 
         <button type="submit" class="btn btn-danger">Save Changes</button>

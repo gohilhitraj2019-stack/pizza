@@ -40,11 +40,6 @@ body{
     color: yellow !important;
 }
 
-.carousel-item img{
-    height:600px;
-    object-fit:cover;
-}
-
 .card img{
     height:250px;
     object-fit:cover;
@@ -62,16 +57,10 @@ body{
     font-size: 18px;
     padding: 12px 0;
 }
-
 .btn-danger{
     border-radius: 30px;
     padding: 10px 30px;
 }
-.btn-danger{
-    border-radius:30px;
-    padding:10px 25px;
-}
-
 
 .square-img{
     width: 368px;
@@ -93,4 +82,12 @@ body{
     border-radius: 8px;
     font-size: 15px;
     font-weight: 600;
+}
+td.text-center{
+    white-space: nowrap;
+}
+
+td.text-center .btn{
+    display: inline-block !important;
+    margin: 2px;
 }
