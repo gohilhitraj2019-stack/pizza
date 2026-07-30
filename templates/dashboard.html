@@ -57,13 +57,13 @@
           <div class="container-fluid">
             <ul class="navbar-nav">
               <li class="nav-item">
-<a class="nav-link"
-   data-lte-toggle="sidebar"
-   href="#"
-   role="button"
-   aria-label="Toggle sidebar">
+<button
+    type="button"
+    class="nav-link border-0 bg-transparent"
+    data-lte-toggle="sidebar"
+    aria-label="Toggle sidebar">
     <i class="bi bi-list"></i>
-</a>
+</button>
                 
               </li>
             </ul>
@@ -124,14 +124,14 @@
 
                 <!-- Pizza List -->
                 <li class="nav-item">
-             <a href="#"
-   class="nav-link"
-   id="nav-pizzalist"
-   onclick="showSection('pizzalist'); return false;"
-   onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showSection('pizzalist');}">
-                     <i class="nav-icon bi bi-circle"></i>
-                    <p>Pizza List 🍕</p>
-                  </a>
+             <button
+    type="button"
+    class="nav-link border-0 bg-transparent text-start w-100"
+    id="nav-pizzalist"
+    onclick="showSection('pizzalist')">
+    <i class="nav-icon bi bi-circle"></i>
+    <p>Pizza List 🍕</p>
+</button>
                 </li>
 
                 <!-- View Reviews -->
