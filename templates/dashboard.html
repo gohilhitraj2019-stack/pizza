@@ -682,10 +682,8 @@ style="width:90px;height:70px;object-fit:cover;border-radius:8px;">
 </script>
 <script>
 
-fetch("/api/review")
-.then(response => response.json())
-.then(data => {
-
+window.addEventListener("DOMContentLoaded", async () => {
+  
     let table = document.getElementById("reviewTable");
 
     table.innerHTML = "";
