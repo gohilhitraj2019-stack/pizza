@@ -361,9 +361,7 @@ def init_about_stats():
 init_about_stats()  # runs once when the app starts
 
 # ---------------- EDIT ABOUT STATS ----------------
-
 @app.route("/editabout", methods=["GET", "POST"])
-@csrf.exempt
 def editabout():
     with sqlite3.connect(DATABASE) as conn:
      cursor = conn.cursor()
