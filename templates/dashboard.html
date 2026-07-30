@@ -634,10 +634,9 @@ case 'pizzalist':
       </script>
 <script>
 
-fetch("/api/pizzas")
-.then(response => response.json())
-.then(data => {
-
+(async () => {
+    const response = await fetch("/api/pizzas");
+    const data = await response.json();
     let table = document.getElementById("pizzaTable");
 
     table.innerHTML = "";
@@ -679,9 +678,7 @@ style="width:90px;height:70px;object-fit:cover;border-radius:8px;">
 </tr>
 `;
 
-    });
-
-});
+})();
 
 </script>
 <script>
