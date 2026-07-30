@@ -1,5 +1,5 @@
 
-1.0PythonFrontend"1785444804577*py2.Bç
+1.0PythonFrontend"1785445104884*py2.Bç
 
 imports1
 
@@ -38,9 +38,9 @@
 
 app.editpizza28
 
-app.get_pizzas30
+app.editreview30
 
-app.editreview32
+app.get_pizzas32
 
 
 app.logout34

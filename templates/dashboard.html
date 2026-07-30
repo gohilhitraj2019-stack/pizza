@@ -635,8 +635,7 @@ case 'pizzalist':
       </script>
 <script>
 
-(async () => {
-    const response = await fetch("/api/pizzas");
+window.addEventListener("DOMContentLoaded", async () => {    const response = await fetch("/api/pizzas");
     const data = await response.json();
     let table = document.getElementById("pizzaTable");
 
@@ -679,8 +678,7 @@ style="width:90px;height:70px;object-fit:cover;border-radius:8px;">
 </tr>
 `;
     });
-})();
-
+});
 </script>
 <script>
 
