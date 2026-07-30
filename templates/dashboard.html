@@ -111,14 +111,14 @@
                 
                 <!-- Dashboard -->
                 <li class="nav-item">
-<a href="#"
-   class="nav-link active"
-   id="nav-dashboard"
-   onclick="showSection('dashboard'); return false;"
-   onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showSection('dashboard');}">          
-         <i class="nav-icon bi bi-speedometer"></i>
-                    <p>Dashboard 📊</p>
-                  </a>
+<button
+    type="button"
+    class="nav-link active border-0 bg-transparent text-start w-100"
+    id="nav-dashboard"
+    onclick="showSection('dashboard')">
+    <i class="nav-icon bi bi-speedometer"></i>
+    <p>Dashboard</p>
+</button>
                 </li>
 
                 <!-- Pizza List -->
@@ -135,17 +135,17 @@
 
                 <!-- View Reviews -->
                 <li class="nav-item">
-<a href="#"
-   class="nav-link"
-   id="nav-reviews"
-   onclick="showSection('reviews'); return false;"
-   onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showSection('reviews');}">
-                   <i class="nav-icon bi bi-star"></i>
-                    <p>View Reviews 👨🏻💻</p>
-                  </a>
+<button
+    type="button"
+    class="nav-link border-0 bg-transparent text-start w-100"
+    id="nav-reviews"
+    onclick="showSection('reviews')">
+    <i class="nav-icon bi bi-star"></i>
+    <p>View Reviews</p>
+</button>
                 </li>
                 <li class="nav-item">
-                <button
+ <button
     type="button"
     class="nav-link border-0 bg-transparent w-100 text-start"
     id="nav-aboutsection"
@@ -677,7 +677,7 @@ style="width:90px;height:70px;object-fit:cover;border-radius:8px;">
 </td>
 </tr>
 `;
-
+    });
 })();
 
 </script>
