@@ -1,7 +1,0 @@
-organization=gohilhitraj2019-stack
-projectKey=gohilhitraj2019-stack_pizza
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.99719
-dashboardUrl=https://sonarcloud.io/dashboard?id=gohilhitraj2019-stack_pizza
-ceTaskId=AZ-0iag9XBu2i8oDc7tV
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZ-0iag9XBu2i8oDc7tV
